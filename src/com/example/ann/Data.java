@@ -14,6 +14,10 @@ public class Data {
     public static int M;
     public static int L;
     public static int N;
+
+    public double[] getOutput(){return output;}
+    public double[] getPredictedOutput(){return predictedOutput;}
+    public double[][] getOutWeights(){return outWeights;}
                                                               // L        M
     public double[][] WeightsInitialization(double[][]weights, int rew, int column){
         weights = new double[rew][column];
@@ -41,6 +45,7 @@ public class Data {
         ForwardPropagation forward = new ForwardPropagation();
         Data data = new Data();
 
+
         try
         {
             //the file to be opened for reading
@@ -57,10 +62,13 @@ public class Data {
             output = new double[N];
             scannerReader.nextLine();
 
+            BackPropagation backPropagation = new BackPropagation(M, L, N);
+
 
             int i, j;
             while(scannerReader.hasNextLine())
             {
+
                 //input data
                 for(i =0 ; i<M ; i++){
                     input[i] = scannerReader.nextDouble();
@@ -72,7 +80,7 @@ public class Data {
                 }
 
                 // Normalization
-                input = normalization.inputNormalization(input);
+                //input = normalization.inputNormalization(input);
                 // output = normalization.inputNormalization(output);
 
                 // Weights Initialization Randomly
@@ -83,14 +91,19 @@ public class Data {
                 // forward propagation
                 hidden = forward.forwardPropa(input, hiddenWeights);
                 predictedOutput = forward.forwardPropa(hidden, outWeights);
-
+/**********/
+                normalization.fileNormalization("train.txt", "normData.txt");
 
                 buffer = scannerReader.nextLine();      //returns the line that was skipped
                 break;
             }
 
-//            for (i=0 ; i< hiddenWeights.length ; i++)
-//                System.out.println(hiddenWeights[i][0]);
+            //System.out.print("MSE ");
+            //System.out.println(backPropagation.MSE());
+
+            /*
+            for (i=0 ; i< N ; i++)
+                System.out.println(output[i]);
 
             /*
             for (String a : splitValues)
