@@ -11,8 +11,8 @@ public class ForwardPropagation {
     public double[] forwardPropa(double[]input, double[][] weights){
         int l = weights.length;
         int m = weights[0].length;
-        System.out.println(m);
-        System.out.println(l);
+//        System.out.println(m);
+//        System.out.println(l);
         double []hidden = new double[l];
         double result = 0.0;
 
