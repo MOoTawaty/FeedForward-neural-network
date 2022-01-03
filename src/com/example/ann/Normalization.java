@@ -8,11 +8,12 @@ public class Normalization {
     private  double[] mean;
     private  double[] standardDev;
     private double[][] data;
+    private int N;
 
     private void Mean(double[][] input){
 
         double sum = 0.0;
-        for (int i=0 ; i<input[0].length ; i++){
+        for (int i=0 ; i<input[0].length-N ; i++){
             for (int j=0 ; j<input.length ; j++){
                 sum += input[j][i];
             }
@@ -25,7 +26,7 @@ public class Normalization {
     private void standardDeviation(double[][] input){
         double result = 0.0;
         double blockResult;
-        for (int i=0 ; i<input[0].length ; i++){  // 9
+        for (int i=0 ; i<input[0].length-N ; i++){  // 8
             for (int j=0 ; j<input.length ; j++) {  // 515
                 result += (input[j][i] - mean[i]) * (input[j][i] - mean[i]);
             }
@@ -40,7 +41,7 @@ public class Normalization {
 
     public void inputNormalization(double[][] input){
 
-        for (int i=0 ; i<input[0].length ; i++) {  // 9
+        for (int i=0 ; i<input[0].length-N ; i++) {  // 9
             for (int j = 0; j < input.length; j++) {  // 515
                 input[j][i] = (input[j][i] - mean[i])/standardDev[i];
             }
@@ -57,7 +58,7 @@ public class Normalization {
             //returns true if there is another line to read
             int L = scannerReader.nextInt();
             scannerReader.nextInt();
-            int N = scannerReader.nextInt();
+            N = scannerReader.nextInt();
 
             int size = scannerReader.nextInt();
             //System.out.println(size);  515
@@ -82,9 +83,9 @@ public class Normalization {
 
     public void fileNormalization(String inFileName, String outFileNam){
         fileData(inFileName);
-        mean = new double[data[0].length];
+        mean = new double[data[0].length-N];
         Mean(data);
-        standardDev = new double[data[0].length];
+        standardDev = new double[data[0].length-N];
         standardDeviation(data);
         inputNormalization(data);
 
@@ -96,11 +97,17 @@ public class Normalization {
             // "US-ASCII" for converting to string
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos, "US-ASCII");
 
-            for (int i=0 ; i<data.length ; i++) {  // 9
-                for (int j = 0; j < data[0].length; j++) {  // 515
+            for (int i=0 ; i<data.length ; i++) {  // 515
+                for (int j = 0; j < (data[0].length-N); j++) {  // 8
                     // converse double to string & store 6 digits from the double value
                     outputStreamWriter.append(String.valueOf(data[i][j]), 0, 6);
                     outputStreamWriter.write("   ");
+                    if(j == (data[0].length-N-1)){
+                        for (j=j+1 ; j<data[0].length ; j++){
+                            outputStreamWriter.append(String.valueOf(data[i][j]));
+                            outputStreamWriter.write("   ");
+                        }
+                    }
                 }
                 outputStreamWriter.write('\n');
             }
