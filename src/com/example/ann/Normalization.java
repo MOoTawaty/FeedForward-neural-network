@@ -19,7 +19,6 @@ public class Normalization {
             }
             mean[i] = sum/input.length;
             sum = 0.0;
-            //System.out.println(mean[i]);
         }
     }
 
@@ -32,7 +31,6 @@ public class Normalization {
             }
             blockResult = result/input.length;
             standardDev[i] = Math.sqrt(blockResult);
-            //System.out.println(standardDev[i]);
             result = 0.0;
         }
 
@@ -49,6 +47,7 @@ public class Normalization {
 
     }
 
+    //Reading file data in Array
     public void fileData(String fileName){
         try
         {
@@ -61,7 +60,7 @@ public class Normalization {
             N = scannerReader.nextInt();
 
             int size = scannerReader.nextInt();
-            //System.out.println(size);  515
+            //System.out.println(size);  //501
             data = new double[size][L+N];
 
             int i = 0;
@@ -81,6 +80,7 @@ public class Normalization {
         }
     }
 
+    //Back Writing the normalized file data in new file
     public void fileNormalization(String inFileName, String outFileNam){
         fileData(inFileName);
         mean = new double[data[0].length-N];
@@ -99,7 +99,7 @@ public class Normalization {
 
             for (int i=0 ; i<data.length ; i++) {  // 515
                 for (int j = 0; j < (data[0].length-N); j++) {  // 8
-                    // converse double to string & store 6 digits from the double value
+                    // converse double to string & store 6 digits from the result double value
                     outputStreamWriter.append(String.valueOf(data[i][j]), 0, 6);
                     outputStreamWriter.write("   ");
                     if(j == (data[0].length-N-1)){
