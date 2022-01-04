@@ -21,7 +21,9 @@ public class BackPropagation {
         for (int i=0 ; i<output.length ; i++) {
             MSE +=((output[i] - predictedOutput[i])*(output[i] - predictedOutput[i]));
         }
-        return (MSE * 0.5);
+        // sigmoid function
+        //MSE = 1/( 1 + Math.pow(Math.E,(-1*MSE)));
+        return (MSE / output.length);
     }
 
 
