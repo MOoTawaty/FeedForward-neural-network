@@ -1,8 +1,6 @@
 package com.example.ann;
 
 public class ForwardPropagation {
-    private double [][] hiddenWeights;
-    private double [][] outWeights;
 
 
     // forward Propagation method
@@ -19,14 +17,8 @@ public class ForwardPropagation {
             // sigmoid function
             result = 1/( 1 + Math.pow(Math.E,(-1*result)));
             hidden[i] = result;
-            //System.out.println(hidden[i]);
             result = 0.0;
         }
-
-        /**
-        for (int i=0 ; i<l ; i++)
-            System.out.println(hidden[i]);
-         */
 
         return hidden;
     }
