@@ -5,29 +5,17 @@ public class BackPropagation {
     public static double [] predictedOutput;
     public static double [] hidden;
     public static double [] input;
-    //public static double[][] outWeights;
-    public static int m;
-    public static int l;
-    public static int n;
-/*
-    public BackPropagation(int m, int l, int n){
-        this.m = m;
-        this.l = l;
-        this.n = n;
 
-    }
- */
     public void setting(){
-        Data data = new Data();
-        output = data.getOutput();
-        predictedOutput = data.getPredictedOutput();
-        //System.out.println(predictedOutput[0]);
-        hidden = data.getHidden();
-        input = data.getInput();
+        Training training = new Training();
+        output = training.getOutput();
+        predictedOutput = training.getPredictedOutput();
+        hidden = training.getHidden();
+        input = training.getInput();
     }
 
     // Mean Square Error
-    public double MSE(){
+    public double MSE(double[]output, double[]predictedOutput){
         setting();
         double MSE = 0.0;
         for (int i=0 ; i<output.length ; i++) {
@@ -36,11 +24,16 @@ public class BackPropagation {
         return (MSE * 0.5);
     }
 
+
+
+
     public void backPropagation(double[][] outWeights, double[][] hiddenWeights){
+
+
         //1- calculate errors of the outputs neurons
         double []outError = new double[output.length]; // N=1
         for (int i=0 ; i<output.length ; i++) {
-            outError[i] = predictedOutput[i]*(1-predictedOutput[i])*(output[i]-predictedOutput[i]);
+            outError[i] = predictedOutput[i]*(1-predictedOutput[i])*(predictedOutput[i]-output[i]);
         }
 
         /** initializing learning rate */
@@ -49,12 +42,12 @@ public class BackPropagation {
         //2- change output layer weights
         for (int i=0 ; i<outWeights.length ; i++){  //1
             for (int j=0 ; j<outWeights[0].length ; j++){  //10
-                outWeights[i][j] = outWeights[i][j] + learningRate * outError[i] * output[i];
+                outWeights[i][j] = outWeights[i][j] + learningRate * outError[i] * hidden[j];
             }
         }
 
 
-        //3- calculate or (back-propagate) hidden layer Error
+        //3- calculate or (back-propagate) hidden layer neurons Errors
         double []hiddenError = new double[hidden.length]; // N=1
         double result = 0.0;
         for (int j=0 ; j<outWeights[0].length ; j++) {  // outWeights.length = 10 column
@@ -76,6 +69,14 @@ public class BackPropagation {
         }
 
 
+
+
+
+
+
+
+/*
+
         // new outWeights  hiddenWeights
         System.out.println("hiddenWeights: ");
         for (int i=0 ; i<outWeights.length; i++){
@@ -94,7 +95,7 @@ public class BackPropagation {
             }
             System.out.println();
         }
-
+*/
 
 
     }
